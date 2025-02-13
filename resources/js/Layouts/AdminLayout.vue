@@ -1,15 +1,12 @@
 <template>
     <v-app>
-        <Menu />
+        <side-bar></side-bar>
+        <!-- page content -->
         <v-main>
-            <v-container>
-                <slot />
-            </v-container>
+            <slot></slot>
         </v-main>
-        <Footer />
     </v-app>
 </template>
 <script setup>
-import Menu from '../components/Admin/Menu.vue'
-import Footer from '../components/Admin/Footer.vue'
+import SideBar from '../components/Admin/Sidebar.vue';
 </script>
