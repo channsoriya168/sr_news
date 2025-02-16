@@ -15,3 +15,6 @@ Route::get('/admin/dashboard', function () {
 Route::get('/admin/author', function () {
     return Inertia::render('Admin/Author/index');
 })->name('author.index');
+Route::get('/news/entertainment/games', function () {
+    return Inertia::render('User/Entertainment/Games');
+})->name('games');

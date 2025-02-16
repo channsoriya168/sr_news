@@ -20,12 +20,12 @@
                         :key="index" :prepend-icon="sub_item.icon" :title="sub_item.title" @click="openPage(sub_item)"
                         :value="sub_item.value"></v-list-item>
                 </v-list-group>
-
                 <v-list-item active-class="active-item" :height="50" v-else :prepend-icon="item.icon"
                     :title="item.title" @click="openPage(item)" :value="item.value"></v-list-item>
             </div>
         </v-list>
     </v-navigation-drawer>
+
     <v-app-bar elevation-0 class="bg-slate-400" app>
         <template v-slot:prepend>
             <v-btn icon @click="drawer = !drawer">
@@ -48,10 +48,15 @@
             <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
     </v-app-bar>
+
 </template>
+
+
 <script setup>
+
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
+
 const drawer = ref(true);
 const currentTitle = ref('dashboard');
 const items = ref([
@@ -95,6 +100,7 @@ const openPage = (route) => {
     router.get(route.route);
 }
 </script>
+
 <style scoped>
 .active-item {
     background-color: rgba(0, 0, 0, 0.107);

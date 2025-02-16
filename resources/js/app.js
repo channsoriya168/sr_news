@@ -18,13 +18,15 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap CSS
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Bootstrap JS
 import UserLayout from "./Layouts/Mainlayout.vue";
 import AdminLayout from "./Layouts/AdminLayout.vue";
+import Mainlayout from "./Layouts/Mainlayout.vue";
 createInertiaApp({
+    title: (title) => `${title} - SR Newa`,
     resolve: async (name) => {
         const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
         let page = pages[`./Pages/${name}.vue`];
         page.default.layout = name.startsWith("Admin/")
             ? AdminLayout
-            : UserLayout;
+            : Mainlayout;
         return page;
     },
     setup({ el, App, props, plugin }) {

@@ -7,7 +7,6 @@ defineProps({ title: String })
 </script>
 
 <template>
-
     <Head :title="title">
         <slot />
     </Head>

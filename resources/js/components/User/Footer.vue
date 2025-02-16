@@ -1,9 +1,9 @@
 <template>
-    <div class="footer container-fluid bg-orange-300">
+    <div class="bg-red-500 footer container-fluid">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <p>&copy; 2020. All Rights Reserved.</p>
+                    <p class="flex items-center justify-center">&copy; 2020. All Rights Reserved.</p>
                 </div>
             </div>
         </div>

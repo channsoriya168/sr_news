@@ -1,5 +1,5 @@
 <template>
-    <head-app title="Admin Dashboard" />
+    <head-app title="Admin" />
     <v-container>
         <v-row>
             <v-col cols="12" md="6" lg="3">
@@ -10,7 +10,6 @@
                     </v-card-text>
                 </v-card>
             </v-col>
-
         </v-row>
     </v-container>
 </template>
