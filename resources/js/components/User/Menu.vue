@@ -74,9 +74,10 @@ const items = ref([
     },
 ]);
 
-const openPage = (route) => {
-    currentTitle.value = route.app_bar;
-    router.get(route.route);
-}
+const handleClick = (sub) => {
+    if (sub.route) {
+        router.get(`/${sub.route}`);
+    }
+};
 
 </script>
