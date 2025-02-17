@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar class="relative flex items-center justify-between flex-none px-6 py-3 m-0 transition-all fw-full">
+    <v-app-bar class="fixed flex items-center justify-between flex-none px-6 py-3 m-0 transition-all fw-full">
         <!-- Left Side (Logo) -->
         <div class="text-5xl font-bold">
             <span class="text-red-500">SR</span><span>NEWS</span>
@@ -7,6 +7,7 @@
 
         <!-- Right Side (Navigation Menu) -->
         <div class="flex items-center">
+            <v-btn variant="text" class="mx-2 text-lg" @click="navigateToHome">{{ home.item }}</v-btn>
             <v-menu v-for="(item, index) in items" :key="index" open-on-hover>
                 <template v-slot:activator="{ props }">
                     <v-btn v-bind="props" variant="text" class="mx-2 text-lg">
@@ -28,6 +29,13 @@
 <script setup>
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
+
+const home = ref({
+    item: 'Home',
+    value: 'home',
+    route: '/'
+});
+
 const items = ref([
     {
         item: 'News',
@@ -57,8 +65,8 @@ const items = ref([
         ]
     },
     {
-        item: 'Business',
-        value: 'business',
+        item: 'Sports',
+        value: 'sports',
     },
     {
         item: 'Technology',
@@ -78,6 +86,10 @@ const handleClick = (sub) => {
     if (sub.route) {
         router.get(`/${sub.route}`);
     }
+};
+
+const navigateToHome = () => {
+    router.get(home.value.route);
 };
 
 </script>
