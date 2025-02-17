@@ -15,7 +15,8 @@
                     </v-btn>
                 </template>
                 <v-list>
-                    <v-list-item v-for="(sub, i) in item.subItems" :key="i">
+                    <v-list-item v-for="(sub, i) in item.subItems" :key="i" @click="handleClick(sub)"
+                        class="cursor-pointer">
                         <v-list-item-title>{{ sub.item }}</v-list-item-title>
                     </v-list-item>
                 </v-list>
@@ -72,4 +73,10 @@ const items = ref([
         value: 'travel',
     },
 ]);
+
+const openPage = (route) => {
+    currentTitle.value = route.app_bar;
+    router.get(route.route);
+}
+
 </script>
