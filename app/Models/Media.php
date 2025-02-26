@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Media extends Model
 {
-    /** @use HasFactory<\Database\Factories\CategoryFactory> */
+    /** @use HasFactory<\Database\Factories\MediaFactory> */
     use HasFactory;
 
     /**
@@ -17,7 +17,7 @@ class Category extends Model
      */
 
     protected $fillable = [
-        'name',
-        'description',
+        'article_id',
+        'file_url',
     ];
 }

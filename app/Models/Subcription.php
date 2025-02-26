@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Subcription extends Model
 {
-    /** @use HasFactory<\Database\Factories\CategoryFactory> */
+    /** @use HasFactory<\Database\Factories\SubcriptionFactory> */
     use HasFactory;
 
     /**
@@ -17,7 +17,9 @@ class Category extends Model
      */
 
     protected $fillable = [
-        'name',
-        'description',
+        'reader_id',
+        'status',
+        'start_date',
+        'end_date',
     ];
 }
