@@ -9,6 +9,9 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
+//ziggy
+import { ZiggyVue } from "ziggy-js";
+
 const vuetify = createVuetify({
     components,
     directives,
@@ -20,7 +23,7 @@ import UserLayout from "./Layouts/Mainlayout.vue";
 import AdminLayout from "./Layouts/AdminLayout.vue";
 import Mainlayout from "./Layouts/Mainlayout.vue";
 createInertiaApp({
-    title: (title) => `${title} - SR Newa`,
+    title: (title) => `${title} - SR News`,
     resolve: async (name) => {
         const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
         let page = pages[`./Pages/${name}.vue`];
@@ -33,6 +36,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(vuetify)
+            .use(ZiggyVue)
             .mount(el);
     },
 });

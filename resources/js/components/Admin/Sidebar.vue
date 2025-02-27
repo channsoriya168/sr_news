@@ -56,23 +56,31 @@
 
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
+import { route } from 'ziggy-js';
 
 const drawer = ref(true);
 const currentTitle = ref('dashboard');
 const items = ref([
     {
         title: 'dashboard',
-        app_bar: "Amin Dashboard",
+        app_bar: "Admin Dashboard",
         icon: 'mdi-view-dashboard',
         value: 'dashboard',
-        route: '/admin/dashboard'
+        route: 'dashboard'
     },
     {
         title: 'Authors',
         app_bar: "Author Dashboard",
         icon: 'mdi-view-dashboard',
         value: 'author',
-        route: '/admin/author'
+        route: 'author.index'
+    },
+    {
+        title: 'Category',
+        app_bar: "Category Dashboard",
+        icon: 'mdi-view-grid',
+        value: 'category',
+        route: 'admin.category.index'
     },
     {
         title: 'setting',
@@ -82,23 +90,22 @@ const items = ref([
                 title: 'dashboard',
                 icon: 'mdi-view-dashboard',
                 value: 'dashboard1',
-                route: '/admin/dashboard'
+                route: 'dashboard'
             },
             {
                 title: 'Authors',
                 icon: 'mdi-view-dashboard',
                 value: 'author2',
-                route: '/admin/author'
+                route: 'author.index'
             },
         ]
-
-
     }
 ]);
-const openPage = (route) => {
-    currentTitle.value = route.app_bar;
-    router.get(route.route);
+const openPage = (item) => {
+    currentTitle.value = item.app_bar || item.title;
+    router.get(route(item.route));
 }
+
 </script>
 
 <style scoped>
