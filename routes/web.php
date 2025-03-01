@@ -14,9 +14,6 @@ Route::get('/admin', function () {
 Route::get('/admin/dashboard', function () {
     return Inertia::render('Admin/Dashboard');
 })->name('dashboard');
-Route::get('/admin/author', function () {
-    return Inertia::render('Admin/Author/index');
-})->name('author.index');
 Route::get('/news/entertainment/games', function () {
     return Inertia::render('User/Entertainment/Games');
 })->name('games');
@@ -26,4 +23,5 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::get('category/{category}/delete', [CategoryController::class, 'delete'])->name('category.delete');
     Route::resource('user', UserController::class);
     Route::get('user/{user}/delete', [UserController::class, 'delete'])->name('user.delete');
+    Route::get('/admin/author', [UserController::class, 'showAuthor'])->name('author.index');
 });

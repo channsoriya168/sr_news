@@ -11,6 +11,18 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+
+    //Query only author
+    public function showAuthor(){
+        $perPage = request()->query('itemsPerPage', 5);
+        $users = User::where('role', 'author')->paginate($perPage)->appends(request()->query());
+
+        return Inertia::render('Admin/Author/Index', [
+            'users' => $users
+        ]);
+
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -61,32 +73,73 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        //
+        return Inertia::render('Admin/User/Show',[
+        'user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return Inertia::render('Admin/User/Edit', [
+            'user' => $user,
+            'roles' => UserRole::all()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'role' => $request->role,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('admin.user.index')->with('success', 'user updated.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->route('admin.user.index')->with('error', 'user not updated.');
+        }
+    }
+
+    //delete
+    public function delete(User $user){
+        return  Inertia::render('Admin/User/Delete', [
+            'user' => $user
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $user->delete();
+
+            DB::commit();
+
+            return redirect()->route('admin.user.index')->with('success', 'user deleted.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->route('admin.user.index')->with('error', 'user not deleted.');
+        }
     }
 }

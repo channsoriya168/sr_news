@@ -1,4 +1,5 @@
 <template>
+    <HeadApp title="Category"></HeadApp>
     <data-table-server :showNo="true" title="Category" :serverItems="serverItems" :items-length="totalItems"
         :headers="headers" :loading="loading" :items-per-page="itemsPerPage" item-value="id" @update:options="loadItems"
         :has-create="true" @view="viewCallback" @delete="deleteCallback" @edit="editCallback"
@@ -10,6 +11,7 @@ import { computed, ref } from 'vue'
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 import { visitModal } from '@inertiaui/modal-vue';
+import HeadApp from '@/components/Admin/HeadApp.vue'
 
 const props = defineProps({
     categories: {

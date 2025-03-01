@@ -73,7 +73,7 @@ const items = ref([
         app_bar: "Author Dashboard",
         icon: 'mdi-view-dashboard',
         value: 'author',
-        route: 'author.index'
+        route: 'admin.author.index'
     },
     {
         title: 'User',
