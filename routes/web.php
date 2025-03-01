@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,4 +24,6 @@ Route::get('/news/entertainment/games', function () {
 Route::prefix('admin')->name('admin.')->group(function (){
     Route::resource('category', CategoryController::class);
     Route::get('category/{category}/delete', [CategoryController::class, 'delete'])->name('category.delete');
+    Route::resource('user', UserController::class);
+    Route::get('user/{user}/delete', [UserController::class, 'delete'])->name('user.delete');
 });

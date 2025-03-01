@@ -76,6 +76,13 @@ const items = ref([
         route: 'author.index'
     },
     {
+        title: 'User',
+        app_bar: "User Dashboard",
+        icon: 'mdi-view-grid',
+        value: 'user',
+        route: 'admin.user.index'
+    },
+    {
         title: 'Category',
         app_bar: "Category Dashboard",
         icon: 'mdi-view-grid',
