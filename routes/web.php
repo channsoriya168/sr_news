@@ -22,4 +22,5 @@ Route::get('/news/entertainment/games', function () {
 
 Route::prefix('admin')->name('admin.')->group(function (){
     Route::resource('category', CategoryController::class);
+    Route::get('category/{category}/delete', [CategoryController::class, 'delete'])->name('category.delete');
 });

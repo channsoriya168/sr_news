@@ -6,28 +6,27 @@
 </template>
 
 <script setup>
-
 import { computed, ref } from 'vue'
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
 import { visitModal } from '@inertiaui/modal-vue';
 
 const props = defineProps({
-    category: {
+    categories: {
         type: Object,
         required: true,
     }
 });
 
 const serverItems = computed(() => {
-    return props.category?.data || [];
+    return props.categories?.data || [];
 });
 const totalItems = computed(() => {
-    return props.category?.total || 0;
+    return props.categories?.total || 0;
 });
 
 const itemsPerPage = computed(() => {
-    return props.category?.per_page || 10;
+    return props.categories?.per_page || 10;
 });
 
 const loading = ref(false);
@@ -81,7 +80,7 @@ function loadItems({ page, itemsPerPage }) {
 
 const viewCallback = (item) => {
     visitModal(route('admin.category.show', {
-        screen_type: item.id,
+        category: item.id,
     }), {
         method: 'get',
         config: {
@@ -96,7 +95,7 @@ const viewCallback = (item) => {
 
 const editCallback = (item) => {
     visitModal(route('admin.category.edit', {
-        screen_type: item.id,
+        category: item.id,
     }), {
         method: 'get',
         config: {
@@ -110,7 +109,7 @@ const editCallback = (item) => {
 
 const deleteCallback = (item) => {
     visitModal(route('admin.category.delete', {
-        screen_type: item.id,
+        category: item.id,
     }), {
         config: {
             slideover: false,

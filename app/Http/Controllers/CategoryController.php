@@ -14,12 +14,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-         $perPage = request()->query('itemsPerPage', 5);
-         $category = Category::paginate($perPage)->appends(request()->query());
+        $perPage = request()->query('itemsPerPage', 5);
+        $categories = Category::paginate($perPage)->appends(request()->query());
 
-         return Inertia::render('Admin/Category/Index', [
-             'category'     => $category,
-         ]);
+        return Inertia::render('Admin/Category/Index', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -27,7 +27,6 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
         return Inertia::render('Admin/Category/Create');
     }
 
@@ -38,7 +37,7 @@ class CategoryController extends Controller
     {
         DB::beginTransaction();
 
-        try{
+        try {
             Category::create([
                 'name' => $request->name,
                 'description' => $request->description,
@@ -47,7 +46,7 @@ class CategoryController extends Controller
             DB::commit();
 
             return redirect()->route('admin.category.index')->with('success', 'Category created.');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
 
             return redirect()->route('admin.category.index')->with('error', 'Category not created.');
@@ -59,7 +58,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return Inertia::render('Admin/Category/Show', [
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -67,7 +68,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return Inertia::render('Admin/Category/Edit', [
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -75,7 +78,30 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $category->update([
+                'name' => $request->name,
+                'description' => $request->description,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('admin.category.index')->with('success', 'category updated.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->route('admin.category_types.index')->with('error', 'category not updated.');
+        }
+    }
+
+    public function delete(Category $category)
+    {
+        return Inertia::render('Admin/Category/Delete', [
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -83,6 +109,19 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+
+            $category->delete();
+
+            DB::commit();
+
+            return redirect()->route('admin.category.index')->with('success', 'category deleted.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->route('admin.category.index')->with('error', 'category not deleted.');
+        }
     }
 }
