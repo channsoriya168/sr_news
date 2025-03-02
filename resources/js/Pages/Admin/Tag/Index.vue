@@ -1,6 +1,6 @@
 <template>
-    <HeadApp title="User"></HeadApp>
-    <data-table-server :showNo="true" title="Author" :serverItems="serverItems" :items-length="totalItems"
+    <HeadApp title="Tag"></HeadApp>
+    <data-table-server :showNo="true" title="Tag" :serverItems="serverItems" :items-length="totalItems"
         :headers="headers" :loading="loading" :items-per-page="itemsPerPage" item-value="id" @update:options="loadItems"
         :has-create="true" @view="viewCallback" @delete="deleteCallback" @edit="editCallback"
         @create="createCallback" />
@@ -14,21 +14,21 @@ import { visitModal } from '@inertiaui/modal-vue';
 import HeadApp from '@/components/Admin/HeadApp.vue'
 
 const props = defineProps({
-    users: {
+    tags: {
         type: Object,
         required: true,
     }
 });
 
 const serverItems = computed(() => {
-    return props.users.data || [];
+    return props.tags?.data || [];
 });
 const totalItems = computed(() => {
-    return props.users.total || 0;
+    return props.tags?.total || 0;
 });
 
 const itemsPerPage = computed(() => {
-    return props.users?.per_page || 10;
+    return props.tags?.per_page || 10;
 });
 
 const loading = ref(false);
@@ -39,18 +39,6 @@ const headers = [
         align: 'start',
         sortable: true,
         key: 'name',
-    },
-    {
-        title: 'Email',
-        align: 'start',
-        sortable: true,
-        key: 'email',
-    },
-    {
-        title: 'Role',
-        align: 'start',
-        sortable: true,
-        key: 'role'
     },
     {
         title: 'Created At',
@@ -87,8 +75,8 @@ function loadItems({ page, itemsPerPage }) {
 }
 
 const viewCallback = (item) => {
-    visitModal(route('admin.user.show', {
-        user: item.id,
+    visitModal(route('admin.tag.show', {
+        tag: item.id,
     }), {
         method: 'get',
         config: {
@@ -102,8 +90,8 @@ const viewCallback = (item) => {
 };
 
 const editCallback = (item) => {
-    visitModal(route('admin.user.edit', {
-        user: item.id,
+    visitModal(route('admin.tag.edit', {
+        tag: item.id,
     }), {
         method: 'get',
         config: {
@@ -116,8 +104,8 @@ const editCallback = (item) => {
 };
 
 const deleteCallback = (item) => {
-    visitModal(route('admin.user.delete', {
-        user: item.id,
+    visitModal(route('admin.tag.delete', {
+        tag: item.id,
     }), {
         config: {
             slideover: false,
@@ -131,7 +119,7 @@ const deleteCallback = (item) => {
 };
 
 const createCallback = () => {
-    visitModal(route('admin.user.create'), {
+    visitModal(route('admin.tag.create'), {
         config: {
             slideover: true,
             position: 'right',

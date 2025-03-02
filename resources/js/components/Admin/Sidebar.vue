@@ -1,7 +1,5 @@
 <template>
-
     <v-navigation-drawer v-model="drawer" floating permanent :width="300" class="sidebar" elevation-10>
-
         <v-list density="compact" nav>
             <v-list-item class="d-flex flex-column">
                 <v-avatar size="200">
@@ -48,12 +46,9 @@
             <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
     </v-app-bar>
-
 </template>
 
-
 <script setup>
-
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
@@ -62,25 +57,45 @@ const drawer = ref(true);
 const currentTitle = ref('dashboard');
 const items = ref([
     {
-        title: 'dashboard',
+        title: 'Dashboard',
         app_bar: "Admin Dashboard",
         icon: 'mdi-view-dashboard',
         value: 'dashboard',
-        route: 'dashboard'
-    },
-    {
-        title: 'Authors',
-        app_bar: "Author Dashboard",
-        icon: 'mdi-view-dashboard',
-        value: 'author',
-        route: 'admin.author.index'
+        route: 'admin.dashboard'
     },
     {
         title: 'User',
         app_bar: "User Dashboard",
         icon: 'mdi-view-grid',
         value: 'user',
-        route: 'admin.user.index'
+        route: 'admin.user.index',
+    },
+    {
+        title: 'User Type',
+        icon: 'mdi-view-grid',
+        sub_items: [
+            {
+                title: 'Admin',
+                app_bar: "Admin Dashboard",
+                icon: 'mdi-view-dashboard',
+                value: 'Admin',
+                route: 'admin.user.admin'
+            },
+            {
+                title: 'Authors',
+                app_bar: "Author Dashboard",
+                icon: 'mdi-view-dashboard',
+                value: 'author',
+                route: 'admin.user.author'
+            },
+            {
+                title: 'Reader',
+                app_bar: "Reader Dashboard",
+                icon: 'mdi-view-dashboard',
+                value: 'reader',
+                route: 'admin.user.reader'
+            },
+        ]
     },
     {
         title: 'Category',
@@ -88,6 +103,13 @@ const items = ref([
         icon: 'mdi-view-grid',
         value: 'category',
         route: 'admin.category.index'
+    },
+    {
+        title: 'Tag',
+        app_bar: "Tag Dashboard",
+        icon: 'mdi-view-grid',
+        value: 'tag',
+        route: 'admin.tag.index'
     },
     {
         title: 'setting',
@@ -112,7 +134,6 @@ const openPage = (item) => {
     currentTitle.value = item.app_bar || item.title;
     router.get(route(item.route));
 }
-
 </script>
 
 <style scoped>

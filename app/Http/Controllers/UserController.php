@@ -12,17 +12,38 @@ use Inertia\Inertia;
 class UserController extends Controller
 {
 
-    //Query only author
-    public function showAuthor(){
+    // Query Only Admin
+    public function showAdmin()
+    {
+        $perPage = request()->query('itemsPerPage', 5);
+        $users = User::where('role', 'admin')->paginate($perPage)->appends(request()->query());
+
+        return Inertia::render('Admin/User/Admin', [
+            'users' => $users
+        ]);
+    }
+
+    // Query Only Reader
+    public function showReader()
+    {
+        $perPage = request()->query('itemsPerPage', 5);
+        $users = User::where('role', 'reader')->paginate($perPage)->appends(request()->query());
+
+        return Inertia::render('Admin/User/Reader', [
+            'users' => $users
+        ]);
+    }
+
+    // Query Only Author
+    public function showAuthor()
+    {
         $perPage = request()->query('itemsPerPage', 5);
         $users = User::where('role', 'author')->paginate($perPage)->appends(request()->query());
 
-        return Inertia::render('Admin/Author/Index', [
+        return Inertia::render('Admin/User/Author', [
             'users' => $users
         ]);
-
     }
-
     /**
      * Display a listing of the resource.
      */
