@@ -1,6 +1,6 @@
 import "./bootstrap";
 import { createApp, h } from "vue";
-import { createInertiaApp } from "@inertiajs/vue3";
+import { Link, createInertiaApp } from "@inertiajs/vue3";
 import "../css/app.css"; // Import Tailwind CSS
 
 // Vuetify
@@ -27,6 +27,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap CSS
 import "bootstrap/dist/js/bootstrap.bundle.min.js"; // Bootstrap JS
 import AdminLayout from "./Layouts/AdminLayout.vue";
 import Mainlayout from "./Layouts/Mainlayout.vue";
+import AuthorLayout from "./Layouts/AuthorLayout.vue";
 
 const vuetify = createVuetify({
     components,
@@ -62,9 +63,12 @@ createInertiaApp({
         if (!page) {
             throw new Error(`Page not found: ${name}`);
         }
-        page.default.layout = name.startsWith("Admin/")
+        const layout = name.startsWith("Admin/")
             ? AdminLayout
-            : Mainlayout;
+            : name.startsWith("Author/")
+              ? AuthorLayout
+              : Mainlayout;
+        page.default.layout = layout;
         return page;
     },
     setup({ el, App, props, plugin }) {
@@ -73,6 +77,7 @@ createInertiaApp({
             .use(vuetify)
             .use(ZiggyVue);
 
+        app.component("Link", Link);
         app.component("DataTableServer", DataTableServer);
         app.component("ModalLink", ModalLink);
         app.component("Modal", Modal);

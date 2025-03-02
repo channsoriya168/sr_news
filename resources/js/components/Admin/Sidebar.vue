@@ -105,6 +105,13 @@ const items = ref([
         route: 'admin.category.index'
     },
     {
+        title: 'Article',
+        app_bar: "Article Dashboard",
+        icon: 'mdi-view-grid',
+        value: 'article',
+        route: 'admin.article.index'
+    },
+    {
         title: 'Tag',
         app_bar: "Tag Dashboard",
         icon: 'mdi-view-grid',

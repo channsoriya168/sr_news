@@ -1,8 +1,7 @@
 <template>
 
     <HeadApp title="Home" />
-    <div>User Page</div>
-    <p>
+    <p class="px-10 pt-10">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Sed nec sapien at odio varius
         tincidunt. Proin aliquet urna non nunc fermentum, ut rhoncus odio gravida. Vestibulum ante ipsum primis in
         faucibus orci luctus et ultrices posuere cubilia curae; Integer posuere, erat eget tincidunt fringilla, arcu
@@ -84,7 +83,7 @@
         facilisi. Fusce dignissim elit a ligula aliquet, vel ullamcorper sapien feugiat. Suspendisse potenti. Integer
         dapibus libero vitae erat elementum, sed tempor erat tincidunt.
     </p>
-    <p>
+    <p class="px-10 pb-10">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Sed nec sapien at odio varius
         tincidunt. Proin aliquet urna non nunc fermentum, ut rhoncus odio gravida. Vestibulum ante ipsum primis in
         faucibus orci luctus et ultrices posuere cubilia curae; Integer posuere, erat eget tincidunt fringilla, arcu
