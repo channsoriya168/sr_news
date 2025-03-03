@@ -12,6 +12,12 @@ class ArticleController extends Controller
 
         $perPage = request()->query('itemsPerPage', 5);
         $articles = Article::paginate($perPage)->appends(request()->query());
-        return Inertia::render('Admin/Article/Index');
+        return Inertia::render('Admin/Article/Index', [
+            'articles' => $articles
+        ]);
+    }
+
+    public function create(){
+        return Inertia::render('Author/CreateArticle');
     }
 }

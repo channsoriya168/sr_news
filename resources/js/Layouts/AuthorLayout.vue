@@ -1,7 +1,8 @@
 <template>
+    <HeadApp title="Author" />
     <v-app>
         <Header />
-        <Buttons />
+        <Buttons @create="createCallback" />
         <v-main>
             <slot></slot>
         </v-main>
@@ -14,7 +15,19 @@
 import Header from '../components/Author/Header.vue';
 import Footer from '../components/Author/Footer.vue';
 import Buttons from '../components/Author/Buttons.vue';
+import { route } from 'ziggy-js';
+import { visitModal } from '@inertiaui/modal-vue';
+import HeadApp from '@/components/Admin/HeadApp.vue'
 
+const createCallback = () => {
+    visitModal(route('admin.article.create'), {
+        config: {
+            slideover: true,
+            position: 'center',
+            closeExplicitly: true,
+            maxWidth: 'md',
+        },
 
-
+    });
+};
 </script>
