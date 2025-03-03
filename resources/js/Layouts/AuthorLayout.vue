@@ -1,10 +1,11 @@
 <template>
     <v-app>
         <Header />
+        <Buttons />
         <v-main>
             <slot></slot>
         </v-main>
-        <Footer/>
+        <Footer />
     </v-app>
 </template>
 
@@ -12,5 +13,8 @@
 
 import Header from '../components/Author/Header.vue';
 import Footer from '../components/Author/Footer.vue';
+import Buttons from '../components/Author/Buttons.vue';
+
+
 
 </script>
