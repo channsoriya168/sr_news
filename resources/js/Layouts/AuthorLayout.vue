@@ -22,10 +22,10 @@ import HeadApp from '@/components/Admin/HeadApp.vue'
 const createCallback = () => {
     visitModal(route('admin.article.create'), {
         config: {
-            slideover: true,
+            slideover: false,
             position: 'center',
-            closeExplicitly: true,
-            maxWidth: 'md',
+            closeExplicitly: false,
+            maxWidth: '2xl',
         },
 
     });

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('content');
             $table->string('img_url')->nullable();
             $table->date('published_date')->nullable();
-            $table->string('status')->default(ArticleStatus::DRAFT->value);
+            $table->string('status')->default(ArticleStatus::PUBLISHED->value);
             $table->softDeletes();
             $table->timestamps();
         });

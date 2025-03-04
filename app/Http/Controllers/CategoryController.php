@@ -12,8 +12,9 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $perPage = request()->query('itemsPerPage', 5);
         $categories = Category::paginate($perPage)->appends(request()->query());
 

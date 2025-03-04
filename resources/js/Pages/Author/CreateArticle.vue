@@ -5,13 +5,13 @@
 
             <form @submit.prevent="submitForm">
 
-                <input type="text" v-model="form.title"
+                <input type="text" v-model="form.title" id="title" name="title"
                     class="w-full p-2 text-lg font-medium border-b focus:outline-none"
                     placeholder="Title of the article..." required>
 
-                <textarea v-model="form.content"
+                <textarea v-model="form.content" id="content" name="content"
                     class="w-full p-2 text-sm text-gray-600 border rounded-md focus:outline-none focus:ring focus:ring-gray-200"
-                    rows="3" placeholder="Write something..."></textarea>
+                    rows="3" placeholder="Write content..."></textarea>
 
                 <div v-if="imagePreview" class="relative mt-3">
                     <img :src="imagePreview" class="w-full rounded-lg">
@@ -32,15 +32,14 @@
                         </svg>
                         <span>Upload Image</span>
                     </label>
-                    <input type="file" id="image-upload" class="hidden" @change="handleImageUpload">
+                    <input type="file" id="image-upload" name="image-upload" class="hidden" @change="handleImageUpload">
                 </div>
 
                 <div class="flex justify-between gap-1 mt-4">
                     <div>
-                        <label for="Category" class="mr-2">Category</label>
-                        <select v-model="form.category_id"
+                        <label for="category" class="mr-2">Category</label>
+                        <select v-model="form.category_id" name="status" id="status"
                             class="w-3/4 p-2 border rounded-md focus:ring focus:ring-gray-200">
-                            <option value="" disabled>Category</option>
                             <option v-for="category in categories" :key="category.id" :value="category.id">
                                 {{ category.name }}
                             </option>
@@ -48,14 +47,21 @@
                     </div>
                     <div>
                         <label for="status" class="mr-2">Status</label>
-                        <select v-model="form.status"
+                        <select v-model="form.status" name="status" id="status"
                             class="w-3/4 p-2 border rounded-md focus:ring focus:ring-gray-200">
-                            <option value="draft">Draft</option>
-                            <option value="published">Published</option>
+                            <option v-for="status in props.statuses" :key="status.id" :value="status.id">
+                                {{ status }}
+                            </option>
                         </select>
                     </div>
-
                 </div>
+
+                <div class="pt-4 mb-4">
+                    <label for="published_date" class="block text-black">Published Date</label>
+                    <input type="date" v-model="form.published_date" id="published_date" name="published_date"
+                        class="w-full p-2 border rounded">
+                </div>
+
                 <button type="submit"
                     class="w-full py-2 mt-4 font-semibold text-white transition bg-blue-500 rounded-lg hover:bg-blue-600">
                     Post
@@ -68,29 +74,24 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
-import { ref } from 'vue'
+import { watch, ref, defineProps } from 'vue'
 
-const categories = ref([])
-const imagePreview = ref(null)
+const props = defineProps({
+    statuses: Array,
+    categories: Array
+});
 
-const fetchCategories = async () => {
-    try {
-        const response = await fetch(route('admin.category.index'))
-        categories.value = await response.json()
-    } catch (error) {
-        console.error('Error fetching categories:', error)
-    }
-}
-
-fetchCategories()
+const imagePreview = ref(null);
 
 const form = useForm({
     title: '',
     content: '',
-    category_id: '',
-    img_url: '',
-    status: 'draft'
-})
+    category_id: null,
+    img_url: null,
+    published_date: '',
+    status: null,
+});
+
 
 const handleImageUpload = (event) => {
     const file = event.target.files[0]
@@ -98,7 +99,7 @@ const handleImageUpload = (event) => {
         form.img_url = file
         const reader = new FileReader()
         reader.onload = (e) => {
-            imagePreview.value = e.target.result
+            imagePreview.value = e.target.result // ✅ Update imagePreview value
         }
         reader.readAsDataURL(file)
     }
@@ -106,13 +107,26 @@ const handleImageUpload = (event) => {
 
 const removeImage = () => {
     form.img_url = ''
-    imagePreview.value = null
+    imagePreview.value = null // ✅ Clear image preview
 }
+
+watch(() => props.categories, (newCategories) => {
+    if (newCategories.length > 0 && form.category_id === null) {
+        form.category_id = newCategories[0].id;
+    }
+}, { immediate: true });
+
+watch(() => props.statuses, (newStatuses) => {
+    if (newStatuses.length > 0 && form.status === null) {
+        form.status = newStatuses[0].id;
+    }
+}, { immediate: true });
 
 const submitForm = () => {
     form.post(route('admin.article.store'))
 }
 </script>
+
 
 <style scoped>
 .modal-content-wrapper {
