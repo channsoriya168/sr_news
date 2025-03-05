@@ -11,7 +11,7 @@ use Inertia\Inertia;
 
 class ArticleController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
 
         $perPage = request()->query('itemsPerPage', 5);
         $articles = Article::paginate($perPage)->appends(request()->query());
@@ -20,7 +20,7 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function create(){
+    public function create(Request $request){
 
         $categories = Category::all();
 
@@ -31,17 +31,19 @@ class ArticleController extends Controller
     }
 
     public function store(Request $request){
+
         $request->validate([
             'title' => 'required|string',
             'content' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|string',
-            'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img_upload' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'published_date' => 'nullable|date',
         ]);
 
         $imagePath = null;
-        if ($request->hasFile('img_url')) {
-            $imagePath = $request->file('img_url')->store('articles', 'public');
+        if ($request->hasFile('img_upload')) {
+            $imagePath = $request->file('img_upload')->store('articles', 'public');
         }
 
         DB::beginTransaction();
@@ -50,13 +52,14 @@ class ArticleController extends Controller
             Article::create([
                 'title' => $request->title,
                 'content' => $request->content,
-                'category_id' => $request->category_id, // Ensure this is correctly sent from Vue
+                'category_id' => $request->category_id,
                 'status' => $request->status,
-                'img_url' => $imagePath,
+                'img_upload' => $imagePath,
                 'published_date' => $request->published_date
             ]);
 
             DB::commit();
+
             return redirect()->route('author.home')->with('success', 'Article created.');
         } catch (\Exception $e) {
             DB::rollback();

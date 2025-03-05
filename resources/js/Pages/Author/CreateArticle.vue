@@ -5,14 +5,17 @@
 
             <form @submit.prevent="submitForm">
 
+                <!-- Title Input -->
                 <input type="text" v-model="form.title" id="title" name="title"
                     class="w-full p-2 text-lg font-medium border-b focus:outline-none"
                     placeholder="Title of the article..." required>
 
+                <!-- Content Textarea -->
                 <textarea v-model="form.content" id="content" name="content"
                     class="w-full p-2 text-sm text-gray-600 border rounded-md focus:outline-none focus:ring focus:ring-gray-200"
                     rows="3" placeholder="Write content..."></textarea>
 
+                <!-- Image Preview -->
                 <div v-if="imagePreview" class="relative mt-3">
                     <img :src="imagePreview" class="w-full rounded-lg">
                     <button type="button" @click="removeImage"
@@ -21,8 +24,9 @@
                     </button>
                 </div>
 
+                <!-- Image Upload -->
                 <div class="flex items-center gap-2 mt-4">
-                    <label for="image-upload"
+                    <label for="img_upload"
                         class="flex items-center gap-2 px-3 py-2 text-blue-500 transition border border-blue-500 rounded-lg cursor-pointer hover:bg-blue-100">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -32,13 +36,14 @@
                         </svg>
                         <span>Upload Image</span>
                     </label>
-                    <input type="file" id="image-upload" name="image-upload" class="hidden" @change="handleImageUpload">
+                    <input type="file" id="img_upload" name="img_upload" class="hidden" @change="handleImageUpload">
                 </div>
 
+                <!-- Category and Status -->
                 <div class="flex justify-between gap-1 mt-4">
                     <div>
                         <label for="category" class="mr-2">Category</label>
-                        <select v-model="form.category_id" name="status" id="status"
+                        <select v-model="form.category_id" name="category" id="category"
                             class="w-3/4 p-2 border rounded-md focus:ring focus:ring-gray-200">
                             <option v-for="category in categories" :key="category.id" :value="category.id">
                                 {{ category.name }}
@@ -56,12 +61,14 @@
                     </div>
                 </div>
 
+                <!-- Published Date -->
                 <div class="pt-4 mb-4">
                     <label for="published_date" class="block text-black">Published Date</label>
                     <input type="date" v-model="form.published_date" id="published_date" name="published_date"
                         class="w-full p-2 border rounded">
                 </div>
 
+                <!-- Submit Button -->
                 <button type="submit"
                     class="w-full py-2 mt-4 font-semibold text-white transition bg-blue-500 rounded-lg hover:bg-blue-600">
                     Post
@@ -70,6 +77,7 @@
         </div>
     </Modal>
 </template>
+
 
 <script setup>
 import { useForm } from '@inertiajs/vue3'
@@ -87,28 +95,27 @@ const form = useForm({
     title: '',
     content: '',
     category_id: null,
-    img_url: null,
+    img_upload: null,
     published_date: '',
     status: null,
 });
 
-
 const handleImageUpload = (event) => {
-    const file = event.target.files[0]
+    const file = event.target.files[0];
     if (file) {
-        form.img_url = file
-        const reader = new FileReader()
+        form.img_upload = file;
+        const reader = new FileReader();
         reader.onload = (e) => {
-            imagePreview.value = e.target.result // ✅ Update imagePreview value
-        }
-        reader.readAsDataURL(file)
+            imagePreview.value = e.target.result; // ✅ Update imagePreview value
+        };
+        reader.readAsDataURL(file);
     }
-}
+};
 
 const removeImage = () => {
-    form.img_url = ''
-    imagePreview.value = null // ✅ Clear image preview
-}
+    form.img_url = null;
+    imagePreview.value = null; // ✅ Clear image preview
+};
 
 watch(() => props.categories, (newCategories) => {
     if (newCategories.length > 0 && form.category_id === null) {
@@ -123,9 +130,10 @@ watch(() => props.statuses, (newStatuses) => {
 }, { immediate: true });
 
 const submitForm = () => {
-    form.post(route('admin.article.store'))
-}
+    form.post(route('admin.article.store'));
+};
 </script>
+
 
 
 <style scoped>

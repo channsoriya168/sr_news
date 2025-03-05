@@ -21,7 +21,7 @@ class Article extends Model
         'category_id',
         'title',
         'content',
-        'img_url',
+        'img_upload',
         'published_date',
         'status',
     ];
@@ -30,5 +30,4 @@ class Article extends Model
     {
         return $this->belongsToMany(Tag::class, 'article_tag');
     }
-
 }
