@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ArticleController extends Controller
@@ -15,8 +16,10 @@ class ArticleController extends Controller
 
         $perPage = request()->query('itemsPerPage', 5);
         $articles = Article::paginate($perPage)->appends(request()->query());
+        dd(Storage::temporaryUrl('articles/' . 'dSycYozkSfftVsoi481BejZgTMrCknYBXhXc6i0t.png', now()->addMinutes(5)));
         return Inertia::render('Admin/Article/Index', [
-            'articles' => $articles
+            'articles' => $articles,
+
         ]);
     }
 
@@ -30,41 +33,41 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+        // $request->validate([
+        //     // 'title' => 'required|string',
+        //     // // 'content' => 'required|string',
+        //     // 'category_id' => 'required|exists:categories,id',
+        //     // 'status' => 'required|string',
+        //     // 'img_upload' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     // 'published_date' => 'nullable|date',
+        // ]);
 
-        $request->validate([
-            'title' => 'required|string',
-            'content' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'status' => 'required|string',
-            'img_upload' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'published_date' => 'nullable|date',
-        ]);
-
-        $imagePath = null;
+        // $imagePath = null;
         if ($request->hasFile('img_upload')) {
-            $imagePath = $request->file('img_upload')->store('articles', 'public');
+            Storage::disk('wasabi')->put('articles', $request->file('img_upload'));
         }
 
-        DB::beginTransaction();
+        // DB::beginTransaction();
 
-        try {
-            Article::create([
-                'title' => $request->title,
-                'content' => $request->content,
-                'category_id' => $request->category_id,
-                'status' => $request->status,
-                'img_upload' => $imagePath,
-                'published_date' => $request->published_date
-            ]);
+        // try {
+        //     Article::create([
+        //         'title' => $request->title,
+        //         'content' => $request->content,
+        //         'category_id' => $request->category_id,
+        //         'status' => $request->status,
+        //         'img_upload' => $imagePath,
+        //         'published_date' => $request->published_date
+        //     ]);
 
-            DB::commit();
+        //     DB::commit();
 
-            return redirect()->route('author.home')->with('success', 'Article created.');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->route('author.home')->with('error', 'Article not created.');
-        }
+        //     return redirect()->route('author.home')->with('success', 'Article created.');
+        // } catch (\Exception $e) {
+        //     DB::rollback();
+        //     return redirect()->route('author.home')->with('error', 'Article not created.');
+        // }
     }
 
 }
