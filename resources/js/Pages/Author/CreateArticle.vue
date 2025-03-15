@@ -41,7 +41,7 @@
 
                 <!-- Category and Status -->
                 <div class="flex justify-between gap-1 mt-4">
-                    <div>
+                    <div class="pt-4 mb-4">
                         <label for="category" class="mr-2">Category</label>
                         <select v-model="form.category_id" name="category" id="category"
                             class="w-3/4 p-2 border rounded-md focus:ring focus:ring-gray-200">
@@ -50,22 +50,35 @@
                             </option>
                         </select>
                     </div>
-                    <div>
-                        <label for="status" class="mr-2">Status</label>
-                        <select v-model="form.status" name="status" id="status"
+                    <!--author-->
+                    <div class="pt-4 mb-4">
+                        <label for="author" class="mr-2">Author</label>
+                        <select v-model="form.author_id" name="author" id="author"
                             class="w-3/4 p-2 border rounded-md focus:ring focus:ring-gray-200">
-                            <option v-for="status in props.statuses" :key="status.id" :value="status.id">
-                                {{ status }}
+                            <option v-for="author in authors" :key="author.id" :value="author.id">
+                                {{ author.name }}
                             </option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Published Date -->
-                <div class="pt-4 mb-4">
-                    <label for="published_date" class="block text-black">Published Date</label>
-                    <input type="date" v-model="form.published_date" id="published_date" name="published_date"
-                        class="w-full p-2 border rounded">
+                <div class="flex items-center justify-between gap-1 align-item">
+                    <!-- Published Date -->
+                    <div class="pt-4 mb-4">
+                        <label for="published_date" class="block text-black">Published Date</label>
+                        <input type="date" v-model="form.published_date" id="published_date" name="published_date"
+                            class="w-full p-2 border rounded">
+                    </div>
+                    <!-- Status -->
+                    <div class="pt-4 mb-4">
+                        <label for="status" class="mr-2">Status</label>
+                        <select v-model="form.status" name="status" id="status"
+                            class="w-3/4 p-2 border rounded-md focus:ring focus:ring-gray-200">
+                            <option v-for="status in props.statuses" :key="status" :value="status">
+                                {{ status }}
+                            </option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Submit Button -->
@@ -86,7 +99,8 @@ import { watch, ref, defineProps } from 'vue'
 
 const props = defineProps({
     statuses: Array,
-    categories: Array
+    categories: Array,
+    authors: Array,
 });
 
 const imagePreview = ref(null);
@@ -94,6 +108,7 @@ const imagePreview = ref(null);
 const form = useForm({
     title: '',
     content: '',
+    author_id: null,
     category_id: null,
     img_upload: null,
     published_date: '',
@@ -125,9 +140,16 @@ watch(() => props.categories, (newCategories) => {
 
 watch(() => props.statuses, (newStatuses) => {
     if (newStatuses.length > 0 && form.status === null) {
-        form.status = newStatuses[0].id;
+        form.status = newStatuses[0];
     }
 }, { immediate: true });
+
+watch(() => props.authors, (newAuthors) => {
+    if (newAuthors.length > 0 && form.author_id === null) {
+        form.author_id = newAuthors[0].id;
+    }
+}, { immediate: true });
+
 
 const submitForm = () => {
     form.post(route('admin.article.store'));

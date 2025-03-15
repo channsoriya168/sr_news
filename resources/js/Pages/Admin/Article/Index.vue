@@ -38,7 +38,7 @@ const headers = [
         title: 'Author',
         align: 'start',
         sortable: true,
-        key: 'author',
+        key: 'author_id',
     },
     {
         title: 'Title',
@@ -56,19 +56,13 @@ const headers = [
         title: 'Category',
         align: 'start',
         sortable: true,
-        key: 'category',
-    },
-    {
-        title: 'Image Url',
-        align: 'start',
-        sortable: true,
-        key: 'image url'
+        key: 'category_id',
     },
     {
         title: 'Publish Date',
         align: 'start',
         sortable: true,
-        key: 'author',
+        key: 'published_date',
     },
     {
         title: 'Status',
