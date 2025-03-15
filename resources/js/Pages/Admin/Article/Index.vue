@@ -1,6 +1,5 @@
 <template>
     <HeadApp title="Article"></HeadApp>
-    <i class="text-2xl fa-solid fa-circle-user"></i>
     <data-table-server :showNo="true" title="Article" :serverItems="serverItems" :items-length="totalItems"
         :headers="headers" :loading="loading" :items-per-page="itemsPerPage" item-value="id" @update:options="loadItems"
         :has-create="true" @view="viewCallback" @delete="deleteCallback" @edit="editCallback"
@@ -158,8 +157,8 @@ const deleteCallback = (item) => {
 const createCallback = () => {
     visitModal(route('admin.article.create'), {
         config: {
-            slideover: true,
-            position: 'right',
+            slideover: false,
+            position: 'center',
             closeExplicitly: true,
             maxWidth: '2xl',
         },

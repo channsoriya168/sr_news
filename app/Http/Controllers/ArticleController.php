@@ -16,17 +16,15 @@ class ArticleController extends Controller
 
         $perPage = request()->query('itemsPerPage', 5);
         $articles = Article::paginate($perPage)->appends(request()->query());
-        dd(Storage::temporaryUrl('articles/' . 'dSycYozkSfftVsoi481BejZgTMrCknYBXhXc6i0t.png', now()->addMinutes(5)));
+        // dd(Storage::temporaryUrl('articles/' . 'h4ixPwjUYWp6ZEn8WDAry8QMTec840vHnznxys17.jpg', now()->addMinutes(5)));
         return Inertia::render('Admin/Article/Index', [
             'articles' => $articles,
-
         ]);
     }
 
     public function create(Request $request){
 
         $categories = Category::all();
-
         return Inertia::render('Author/CreateArticle', [
             'statuses' => ArticleStatus::all(),
             'categories' => $categories
@@ -44,30 +42,32 @@ class ArticleController extends Controller
         //     // 'published_date' => 'nullable|date',
         // ]);
 
-        // $imagePath = null;
+        $imagePath = null;
+
         if ($request->hasFile('img_upload')) {
-            Storage::disk('wasabi')->put('articles', $request->file('img_upload'));
+            $imagePath = Storage::disk('wasabi')->put('articles', $request->file('img_upload'));
         }
 
-        // DB::beginTransaction();
+        DB::beginTransaction();
 
-        // try {
-        //     Article::create([
-        //         'title' => $request->title,
-        //         'content' => $request->content,
-        //         'category_id' => $request->category_id,
-        //         'status' => $request->status,
-        //         'img_upload' => $imagePath,
-        //         'published_date' => $request->published_date
-        //     ]);
+        try {
+            Article::create([
+                'title' => $request->title,
+                'content' => $request->content,
+                'category_id' => $request->category_id,
+                'status' => $request->status,
+                'img_upload' => $imagePath,
+                'published_date' => $request->published_date
+            ]);
 
-        //     DB::commit();
+            DB::commit();
 
-        //     return redirect()->route('author.home')->with('success', 'Article created.');
-        // } catch (\Exception $e) {
-        //     DB::rollback();
-        //     return redirect()->route('author.home')->with('error', 'Article not created.');
-        // }
+            return redirect()->route('author.home')->with('success', 'Article created.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->route('author.home')->with('error', 'Article not created. Error: ' . $e->getMessage());
+        }
     }
 
 }

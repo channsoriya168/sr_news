@@ -106,7 +106,7 @@ const handleImageUpload = (event) => {
         form.img_upload = file;
         const reader = new FileReader();
         reader.onload = (e) => {
-            imagePreview.value = e.target.result; // ✅ Update imagePreview value
+            imagePreview.value = e.target.result;
         };
         reader.readAsDataURL(file);
     }
@@ -114,7 +114,7 @@ const handleImageUpload = (event) => {
 
 const removeImage = () => {
     form.img_url = null;
-    imagePreview.value = null; // ✅ Clear image preview
+    imagePreview.value = null;
 };
 
 watch(() => props.categories, (newCategories) => {

@@ -45,6 +45,9 @@
         <v-btn icon>
             <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
+        <v-btn icon>
+            <i class="text-2xl fa-solid fa-circle-user"></i>
+        </v-btn>
     </v-app-bar>
 </template>
 
