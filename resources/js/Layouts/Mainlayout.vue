@@ -4,7 +4,7 @@
         <v-main>
             <slot></slot>
         </v-main>
-        <Footer />
+        <!-- <Footer /> -->
     </v-app>
 </template>
 <script setup>

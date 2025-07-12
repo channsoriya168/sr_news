@@ -59,9 +59,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return Inertia::render('Admin/Category/Show', [
+        return Inertia::modal('Admin/Category/Show', [
             'category' => $category,
-        ]);
+        ])->baseRoute('admin.category.index');
     }
 
     /**
@@ -69,9 +69,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return Inertia::render('Admin/Category/Edit', [
+        return Inertia::modal('Admin/Category/Edit', [
             'category' => $category,
-        ]);
+        ])->baseRoute('admin.category.index');
     }
 
     /**
@@ -100,9 +100,9 @@ class CategoryController extends Controller
 
     public function delete(Category $category)
     {
-        return Inertia::render('Admin/Category/Delete', [
+        return Inertia::modal('Admin/Category/Delete', [
             'category' => $category,
-        ]);
+        ])->baseRoute('admin.category.index');
     }
 
     /**
